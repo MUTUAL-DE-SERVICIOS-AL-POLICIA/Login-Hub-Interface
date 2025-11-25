@@ -24,10 +24,21 @@ export async function POST(request: Request) {
       );
     }
 
+    if (responseData.error) {
+      return NextResponse.json(
+        {
+          error: true,
+          message: responseData.message,
+          user: responseData.user,
+        },
+        { status: 400 },
+      );
+    }
+
     const nextResponse = NextResponse.json(
       {
         error: false,
-        message: "Login successful",
+        message: "Inicio de sesión exitoso",
         user: responseData.user,
       },
       { status: 200 },
