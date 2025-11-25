@@ -9,7 +9,7 @@ const redirectTo = (req: NextRequest, pathname: string) => {
   return NextResponse.redirect(url);
 };
 
-export const middleware = async (req: NextRequest) => {
+export const proxy = async (req: NextRequest) => {
   const response = NextResponse.next();
 
   if (req.method === "OPTIONS") {

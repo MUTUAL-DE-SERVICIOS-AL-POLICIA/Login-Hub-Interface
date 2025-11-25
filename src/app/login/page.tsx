@@ -9,8 +9,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { MuserpolLogo } from "@/components/icons";
 import { apiServerFrontend } from "@/utils/services";
-import { MuserpolLogo } from "@/components/common/icons";
 
 interface FormData {
   user: string;

@@ -12,7 +12,6 @@ interface Props {
 }
 
 export default function Software({ name, subtitle, url, image }: Props) {
-
   return (
     <Card
       isFooterBlurred
