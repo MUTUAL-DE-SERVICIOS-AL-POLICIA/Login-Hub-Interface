@@ -1,10 +1,21 @@
 import "@/utils/styles/globals.css";
 import clsx from "clsx";
-import { Viewport } from "next";
+import { Metadata, Viewport } from "next";
 
 import { Providers } from "./providers";
 
 import { fontSans } from "@/utils/fonts";
+
+export const metadata: Metadata = {
+  title: {
+    default: "Inicio MUSERPOL",
+    template: `%s - LoginHub`,
+  },
+  description: "Centro de aplicaciones de la MUSERPOL",
+  icons: {
+    icon: "/icono_muserpol.svg",
+  },
+};
 
 export const viewport: Viewport = {
   themeColor: [
