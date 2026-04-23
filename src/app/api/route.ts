@@ -40,6 +40,7 @@ export async function POST(request: Request) {
         error: false,
         message: "Inicio de sesión exitoso",
         user: responseData.user,
+        access: responseData.access,
       },
       { status: 200 },
     );
