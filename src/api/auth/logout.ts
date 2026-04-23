@@ -12,6 +12,7 @@ export async function logout() {
 
     cookieStore.delete("msp");
     cookieStore.delete("user");
+    cookieStore.delete("access");
   } catch (error: any) {
     console.error(error);
 
