@@ -90,8 +90,10 @@ export default function Login() {
       const data = await response.json();
 
       const userStr = encodeURIComponent(JSON.stringify(data.user));
+      const accessStr = encodeURIComponent(JSON.stringify(data.access));
 
       document.cookie = `user=${userStr}; path=/; max-age=14400; SameSite=Lax;`;
+      document.cookie = `access=${accessStr}; path=/; max-age=14400; SameSite=Lax;`;
 
       if (!data.error) {
         setIsAnimating(true);
