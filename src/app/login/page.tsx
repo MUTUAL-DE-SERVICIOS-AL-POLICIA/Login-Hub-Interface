@@ -1,7 +1,7 @@
 "use client";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Input, Card, toast } from "@heroui/react";
+import { Button, Card, Input, toast } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -157,7 +157,6 @@ export default function Login() {
                             id="user"
                             name="user"
                             placeholder="Ingrese su usuario"
-                            radius="sm"
                             type="text"
                             value={formData.user}
                             onChange={handleInputChange}
@@ -170,41 +169,46 @@ export default function Login() {
                         </div>
                         <div className="space-y-2">
                           <div className="relative">
+                            <label
+                              className="mb-1 block text-sm font-medium"
+                              htmlFor="password"
+                            >
+                              Contraseña
+                            </label>
                             <Input
                               aria-describedby={
                                 errors.password ? "password-error" : undefined
                               }
                               aria-invalid={!!errors.password}
-                              endContent={
-                                <button
-                                  className="focus:outline-hidden"
-                                  type="button"
-                                  onClick={togglePasswordVisibility}
-                                >
-                                  {showPassword ? (
-                                    <FontAwesomeIcon
-                                      className="h-5 w-5"
-                                      icon={faEye}
-                                    />
-                                  ) : (
-                                    <FontAwesomeIcon
-                                      className="h-5 w-5"
-                                      icon={faEyeSlash}
-                                    />
-                                  )}
-                                </button>
-                              }
-                              errorMessage="Por favor ingrese su contraseña"
                               id="password"
-                              label="Contraseña"
-                              labelPlacement="outside"
                               name="password"
                               placeholder="Ingrese su contraseña"
-                              radius="sm"
                               type={showPassword ? "text" : "password"}
                               value={formData.password}
                               onChange={handleInputChange}
                             />
+                            <button
+                              aria-label={
+                                showPassword
+                                  ? "Ocultar contraseña"
+                                  : "Mostrar contraseña"
+                              }
+                              className="absolute right-3 top-10 focus:outline-hidden"
+                              type="button"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? (
+                                <FontAwesomeIcon
+                                  className="h-5 w-5"
+                                  icon={faEye}
+                                />
+                              ) : (
+                                <FontAwesomeIcon
+                                  className="h-5 w-5"
+                                  icon={faEyeSlash}
+                                />
+                              )}
+                            </button>
                           </div>
                           {errors.password && (
                             <p
