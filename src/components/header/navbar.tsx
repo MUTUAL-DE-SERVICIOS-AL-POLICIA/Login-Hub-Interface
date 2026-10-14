@@ -4,22 +4,19 @@ import { Link, Tooltip } from "@heroui/react";
 
 import { UserSession } from "./userSession";
 
-import { ThemeSwitch, Logo } from "@/components";
-import { urlLogin } from "@/services";
-import { User } from "@/utils/interfaces";
-import { logout } from "@/api";
+import { Logo, ThemeSwitch } from "@/components";
+import { UserContext } from "@/utils/interfaces";
 
 interface Props {
-  user: User;
+  context: UserContext;
   environment: string;
   computerToolName: string;
 }
 
-export const Navbar = ({ user, environment, computerToolName }: Props) => {
-  const onLogout = async () => {
-    await logout();
-    window.location.href = `${urlLogin}/login`;
-  };
+export const Navbar = ({ context, environment, computerToolName }: Props) => {
+  const { identity, groups, clientRoles } = context;
+  const username = identity.preferredUsername ?? identity.sub;
+  const name = identity.name ?? username;
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
@@ -27,8 +24,9 @@ export const Navbar = ({ user, environment, computerToolName }: Props) => {
         <div className="flex items-center gap-4">
           <Tooltip delay={0}>
             <Link
-              className="flex justify-start items-center gap-1"
-              href={`${urlLogin}/apphub`}
+              aria-label="Ir al inicio"
+              className="flex items-center justify-start gap-1"
+              href="/apphub"
             >
               <Logo height={30} width={80} />
             </Link>
@@ -39,29 +37,29 @@ export const Navbar = ({ user, environment, computerToolName }: Props) => {
           </Tooltip>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex flex-col items-center text-center leading-tight">
-            <span className="font-bold text-md uppercase">
-              {computerToolName}
+        <div className="flex flex-col items-center text-center leading-tight">
+          <span className="text-md font-bold uppercase">
+            {computerToolName}
+          </span>
+          {(environment === "dev" || environment === "test") && (
+            <span className="mt-1 rounded-sm border border-white/20 bg-red-500 px-2 py-0.5 text-xs font-medium text-white shadow-xs shadow-red-300">
+              {environment === "test"
+                ? "VERSIÓN DE PRUEBAS"
+                : "VERSIÓN DE DESARROLLO"}
             </span>
-            {(environment === "dev" || environment === "test") && (
-              <span className="mt-1 text-xs font-medium text-white bg-red-500 px-2 py-0.5 rounded-sm shadow-xs shadow-red-300 border border-white/20">
-                {environment === "test"
-                  ? "VERSIÓN DE PRUEBAS"
-                  : "VERSIÓN DE DESARROLLO"}
-              </span>
-            )}
-          </div>
+          )}
         </div>
 
-        <div className="hidden sm:flex items-center gap-2">
+        <div className="hidden items-center gap-2 sm:flex">
           <ThemeSwitch />
           <div className="hidden md:flex">
             <UserSession
-              name={user?.name}
-              urlLogin={`${urlLogin}/login`}
-              username={user?.username}
-              onLogout={onLogout}
+              clientRoles={clientRoles}
+              email={identity.email}
+              groups={groups}
+              logoutUrl="/api/auth/logout"
+              name={name}
+              username={username}
             />
           </div>
         </div>
