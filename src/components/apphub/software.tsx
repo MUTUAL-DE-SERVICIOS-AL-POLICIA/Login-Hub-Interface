@@ -5,12 +5,12 @@ import Image from "next/image";
 
 interface Props {
   name: string;
+  description: string;
   url: string;
   image: string;
-  description: string;
 }
 
-export default function Software({ name, url, image, description }: Props) {
+export default function Software({ name, description, url, image }: Props) {
   return (
     <Card className="relative flex h-full w-full max-w-md flex-col overflow-hidden border border-accent/20 bg-linear-to-br from-accent/12 via-surface to-surface-secondary shadow-lg shadow-accent/10 dark:border-accent/30 dark:from-accent/20 dark:via-surface dark:to-accent/8 dark:shadow-accent/5">
       <div
@@ -27,7 +27,7 @@ export default function Software({ name, url, image, description }: Props) {
         </span>
         <div className="flex items-start gap-3">
           <Image
-            alt="Card example background"
+            alt={name}
             className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent dark:bg-accent/20 dark:text-accent-soft-foreground"
             height={100}
             src={image}
@@ -48,7 +48,7 @@ export default function Software({ name, url, image, description }: Props) {
             window.location.href = url;
           }}
         >
-          Ingresar{" "}
+          Ingresar
         </Button>
       </Card.Footer>
     </Card>
